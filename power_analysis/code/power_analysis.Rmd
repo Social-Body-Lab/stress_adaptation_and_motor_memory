@@ -29,7 +29,7 @@ header_size = 10
 axis_size = 10
 
 #theme for plots
-arial_theme = theme(text=element_text(size=header_size,family='arial'),
+avenir_theme = theme(text=element_text(size=header_size,family='avenir'),
                      axis.text.x = element_text(color = 'black', size = axis_size, vjust = 1),
                      axis.text.y = element_text(color = 'black', size = axis_size),
                      axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0), face = "bold"),
@@ -42,7 +42,7 @@ arial_theme = theme(text=element_text(size=header_size,family='arial'),
                      plot.title = element_text(hjust = 0.5, face = "bold"))
 
 #set the font
-par(family = 'arial')
+par(family = 'avenir')
 
 ```
 

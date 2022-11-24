@@ -1,6 +1,6 @@
 ---
 title: "Study on stress-adaptation and motor memory: Power analysis and sample size determination"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -17,6 +17,7 @@ library(broom.mixed)
 library(purrr)
 library(reshape2)
 library(data.table)
+library(tinytex)
 
 ### GRAPH THEMES ###
 
@@ -28,7 +29,7 @@ header_size = 10
 axis_size = 10
 
 #theme for plots
-avenir_theme = theme(text=element_text(size=header_size,family='avenir'),
+arial_theme = theme(text=element_text(size=header_size,family='arial'),
                      axis.text.x = element_text(color = 'black', size = axis_size, vjust = 1),
                      axis.text.y = element_text(color = 'black', size = axis_size),
                      axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0), face = "bold"),
@@ -41,7 +42,7 @@ avenir_theme = theme(text=element_text(size=header_size,family='avenir'),
                      plot.title = element_text(hjust = 0.5, face = "bold"))
 
 #set the font
-par(family = 'avenir')
+par(family = 'arial')
 
 ```
 
@@ -146,7 +147,7 @@ dat_long$value = round(dat_long$value, 0)
 #load plot themes
 source("plot_theme.R")
 
-#plot the data
+#show code for plotting the data (final JPG file loaded into PDF)
 test_labels = c("Short-term memory in\nreference to motor stimuli",
                 "Working memory in\nreference to motor stimuli")
 
@@ -161,11 +162,13 @@ scores_by_hood = ggplot(dat_long, aes(x = test, y = value)) +
                   ylab("Test score") +
                   xlab("Test type") +
                   labs(fill = "Neighbourhood") +
-                  aes(ymin = 0) +
-                  avenir_theme
+                  aes(ymin = 0) 
 
-scores_by_hood
+```
 
+
+```{r plotted simulated data, echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("../plots/plotted_simulated_data_study_3.jpg")
 ```
 
 ### Power analyses 
@@ -202,7 +205,7 @@ simulation_results_neighbourhood_wm = filter(wm_sims, term == "neighbourhood1") 
 
 ### ### ###
 
-#plot power analyse for neighbourhood effect on motor short-term memory
+#show code for plotting power analyse for neighbourhood effect on motor short-term memory (final JPG file loaded into PDF))
 stm_pa = ggplot(aes(as.character(high_stress_motor_effect), participant_n, fill = power), 
                 data = simulation_results_neighbourhood_stm) +
           geom_tile() +
@@ -213,11 +216,12 @@ stm_pa = ggplot(aes(as.character(high_stress_motor_effect), participant_n, fill 
                                breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
                                labels = c(0, 0.2, 0.4, 0.6, 0.8, 1)) +
           xlab("High-stress neighbourhood effect on short-term motor memory") + 
-          ylab("Participant sample size (per neighbourhood)") +
-          avenir_theme
+          ylab("Participant sample size (per neighbourhood)") 
 
-stm_pa
+```
 
+```{r plotted power analyses, echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("../plots/power_analysis_motor_short_term_memory.jpg")
 ```
 
 Above is the power analysis result with short-term motor memory as the outcome. Results suggest that 125 participants per neighbourhood would give sufficient power (0.85) to detect mean differences of at least 0.4 between the higher-stress and lower-stress neighbourhoods.
@@ -237,8 +241,8 @@ Assuming the above, we created the following distributions of standardised score
 * Roma camp and Scampia standardised scores on 'traditional' short-term memory tests: _M_ = -0.25 (_SD_ = 1)
 * Pozzuoli standardised scores on 'traditional' short-term memory tests: _M_ = 0.5 (_SD_ = 1)
 
-* Roma camp and Scampia standardised scores on short-term motor memory test: _M_ = -0.5 (_SD_ = 1)
-* Pozzuoli standardised scores on short-term motor memory test: _M_ = 0.25 (_SD_ = 1)
+* Roma camp and Scampia standardised scores on short-term motor memory test: _M_ = 0.25 (_SD_ = 1)
+* Pozzuoli standardised scores on short-term motor memory test: _M_ = -0.5 (_SD_ = 1)
 
 ``` {r data simulation for comparison with previous study, out.width="100%", echo=FALSE}
 
@@ -323,7 +327,7 @@ comparison_model = lmer(test_score ~ hood*test_type + (1 | participant_id), data
 
 ### ### ###
 
-#plot the data
+#show code for plotting the data (final JPG file loaded into PDF)
 scores_by_hood_and_test = ggplot(data, aes(x = test_type, y = test_score)) + 
                             geom_violin(aes(fill = hood), trim = TRUE, position = position_dodge(0.9)) +
                             geom_boxplot(aes(fill = hood), width = 0.15, position = position_dodge(0.9)) +
@@ -334,11 +338,13 @@ scores_by_hood_and_test = ggplot(data, aes(x = test_type, y = test_score)) +
                             ylab("Test score") +
                             xlab("Test type") +
                             labs(fill = "Neighbourhood") +
-                            aes(ymin = 0) +
-                            avenir_theme
+                            aes(ymin = 0) 
 
-scores_by_hood_and_test
+```
 
+
+```{r plotted data simulation for comparison with previous study, echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("../plots/plotted_simulated_data_for_test_type_comparisons.jpg")
 ```
 
 ### Power analyses 
@@ -374,7 +380,7 @@ simulation_results_roma = filter(simulations, hood == "Scampia") %>%
 
 ### ### ###
 
-#plot power analysis for test score differences for the Scampia neighbourhood
+#show code for plotting power analysis for test score differences for the Scampia neighbourhood (final JPG file loaded into PDF)
 stm_comp_pa = ggplot(aes(as.character(difference_between_hoods), participant_n, fill = power), 
                      data = simulation_results_roma) +
                 geom_tile() +
@@ -385,11 +391,12 @@ stm_comp_pa = ggplot(aes(as.character(difference_between_hoods), participant_n, 
                                      breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
                                      labels = c(0, 0.2, 0.4, 0.6, 0.8, 1)) +
                 xlab("Difference in standardised 'traditional' memory test scores and motor memory test scores") + 
-                ylab("Number of participants from the neighbourhood") +
-                avenir_theme
+                ylab("Number of participants from the neighbourhood") 
 
-stm_comp_pa
+```
 
+```{r plotted power analyses for comparison with previous study, echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("../plots/power_analysis_traditional_and_motor_memory_comparison.jpg")
 ```
 
 Above is the power analysis for comparing differences in standardised 'traditional' memory test scores and standardised motor memory test scores for a higher-stress neighbourhood (Scampia). Results suggest that a sample size of at least 75 participants is needed to detect a difference 0.75 in standardised scores between the two test types.

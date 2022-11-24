@@ -1,6 +1,12 @@
 ---
 title: "Study on stress-adaptation and motor memory: Power analysis and sample size determination"
 output: pdf_document
+knit: (function(inputFile, encoding) { 
+      out_dir = '../summary';
+      rmarkdown::render(inputFile,
+                        encoding = encoding, 
+                        output_file = file.path(dirname(inputFile), out_dir, 'power_analysis.pdf')) })
+
 ---
 
 ```{r setup, include=FALSE}
